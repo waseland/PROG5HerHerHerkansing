@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BralmerDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="idFilm" />
+          </Key>
+          <Property Name="idFilm" Type="int" Nullable="false" />
+          <Property Name="Naam" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Beschrijving" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="filmdraai">
+          <Key>
+            <PropertyRef Name="idFilmdraai" />
+          </Key>
+          <Property Name="idFilmdraai" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Film_idFilm" Type="int" Nullable="false" />
+          <Property Name="Zaal_idZaal" Type="int" Nullable="false" />
+          <Property Name="Begintijd" Type="datetime" Nullable="false" />
+          <Property Name="Eindtijd" Type="datetime" Nullable="false" />
+          <Property Name="Filmdraaiprijs" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="gast">
+          <Key>
+            <PropertyRef Name="idGast" />
+          </Key>
+          <Property Name="idGast" Type="int" Nullable="false" />
+          <Property Name="Reservering_idReservering" Type="int" />
+          <Property Name="Voornaam" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Achternaam" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Tussenvoegsels" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="korting">
+          <Key>
+            <PropertyRef Name="idKorting" />
+          </Key>
+          <Property Name="idKorting" Type="int" Nullable="false" />
+          <Property Name="Begindatum" Type="datetime" Nullable="false" />
+          <Property Name="Einddatum" Type="datetime" Nullable="false" />
+          <Property Name="KortingProcent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reservering">
+          <Key>
+            <PropertyRef Name="idReservering" />
+          </Key>
+          <Property Name="idReservering" Type="int" Nullable="false" />
+          <Property Name="Filmdraai_idFilmdraai" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="AantalGasten" Type="int" Nullable="false" />
+          <Property Name="TotaalPrijs" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Reserveringcol" Type="float" Nullable="false" />
+          <Property Name="Postcode" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Huisnummer" Type="int" Nullable="false" />
+          <Property Name="BankrekeningNummer" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Gast_idGast" Type="int" Nullable="false" />
+          <Property Name="Korting_idKorting" Type="int" />
+        </EntityType>
+        <EntityType Name="zaal">
+          <Key>
+            <PropertyRef Name="idZaal" />
+          </Key>
+          <Property Name="idZaal" Type="int" Nullable="false" />
+          <Property Name="Naam" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Zitplaatsen" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BralmerDatabaseModelStoreContainer">
+          <EntitySet Name="film" EntityType="Self.film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="filmdraai" EntityType="Self.filmdraai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gast" EntityType="Self.gast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="korting" EntityType="Self.korting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservering" EntityType="Self.reservering" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zaal" EntityType="Self.zaal" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BralmerDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="film">
+          <Key>
+            <PropertyRef Name="idFilm" />
+          </Key>
+          <Property Name="idFilm" Type="Int32" Nullable="false" />
+          <Property Name="Naam" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beschrijving" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="filmdraais" Relationship="BralmerDatabaseModel.filmfilmdraai" FromRole="film" ToRole="filmdraai" />
+        </EntityType>
+        <EntityType Name="filmdraai">
+          <Key>
+            <PropertyRef Name="idFilmdraai" />
+          </Key>
+          <Property Name="idFilmdraai" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Film_idFilm" Type="Int32" Nullable="false" />
+          <Property Name="Zaal_idZaal" Type="Int32" Nullable="false" />
+          <Property Name="Begintijd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Eindtijd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Filmdraaiprijs" Type="Double" Nullable="false" />
+          <NavigationProperty Name="reserverings" Relationship="BralmerDatabaseModel.filmdraaireservering" FromRole="filmdraai" ToRole="reservering" />
+          <NavigationProperty Name="film" Relationship="BralmerDatabaseModel.filmfilmdraai" FromRole="filmdraai" ToRole="film" />
+          <NavigationProperty Name="zaal" Relationship="BralmerDatabaseModel.zaalfilmdraai" FromRole="filmdraai" ToRole="zaal" />
+        </EntityType>
+        <EntityType Name="gast">
+          <Key>
+            <PropertyRef Name="idGast" />
+          </Key>
+          <Property Name="idGast" Type="Int32" Nullable="false" />
+          <Property Name="Reservering_idReservering" Type="Int32" />
+          <Property Name="Voornaam" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Achternaam" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tussenvoegsels" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="reservering" Relationship="BralmerDatabaseModel.reserveringgast" FromRole="gast" ToRole="reservering" />
+        </EntityType>
+        <EntityType Name="korting">
+          <Key>
+            <PropertyRef Name="idKorting" />
+          </Key>
+          <Property Name="idKorting" Type="Int32" Nullable="false" />
+          <Property Name="Begindatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Einddatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KortingProcent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="reservering" Relationship="BralmerDatabaseModel.reserveringkorting" FromRole="korting" ToRole="reservering" />
+        </EntityType>
+        <EntityType Name="reservering">
+          <Key>
+            <PropertyRef Name="idReservering" />
+          </Key>
+          <Property Name="idReservering" Type="Int32" Nullable="false" />
+          <Property Name="Filmdraai_idFilmdraai" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AantalGasten" Type="Int32" Nullable="false" />
+          <Property Name="TotaalPrijs" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Reserveringcol" Type="Double" Nullable="false" />
+          <Property Name="Postcode" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Huisnummer" Type="Int32" Nullable="false" />
+          <Property Name="BankrekeningNummer" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gast_idGast" Type="Int32" Nullable="false" />
+          <Property Name="Korting_idKorting" Type="Int32" />
+          <NavigationProperty Name="gasts" Relationship="BralmerDatabaseModel.reserveringgast" FromRole="reservering" ToRole="gast" />
+          <NavigationProperty Name="kortings" Relationship="BralmerDatabaseModel.reserveringkorting" FromRole="reservering" ToRole="korting" />
+          <NavigationProperty Name="filmdraai" Relationship="BralmerDatabaseModel.filmdraaireservering" FromRole="reservering" ToRole="filmdraai" />
+        </EntityType>
+        <EntityType Name="zaal">
+          <Key>
+            <PropertyRef Name="idZaal" />
+          </Key>
+          <Property Name="idZaal" Type="Int32" Nullable="false" />
+          <Property Name="Naam" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Zitplaatsen" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="filmdraais" Relationship="BralmerDatabaseModel.zaalfilmdraai" FromRole="zaal" ToRole="filmdraai" />
+        </EntityType>
+        <EntityContainer Name="BralmerDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="films" EntityType="Self.film" />
+          <EntitySet Name="filmdraais" EntityType="Self.filmdraai" />
+          <EntitySet Name="gasts" EntityType="Self.gast" />
+          <EntitySet Name="kortings" EntityType="Self.korting" />
+          <EntitySet Name="reserverings" EntityType="Self.reservering" />
+          <EntitySet Name="zaals" EntityType="Self.zaal" />
+          <AssociationSet Name="reserveringgast" Association="BralmerDatabaseModel.reserveringgast">
+            <End Role="reservering" EntitySet="reserverings" />
+            <End Role="gast" EntitySet="gasts" />
+          </AssociationSet>
+          <AssociationSet Name="reserveringkorting" Association="BralmerDatabaseModel.reserveringkorting">
+            <End Role="reservering" EntitySet="reserverings" />
+            <End Role="korting" EntitySet="kortings" />
+          </AssociationSet>
+          <AssociationSet Name="filmdraaireservering" Association="BralmerDatabaseModel.filmdraaireservering">
+            <End Role="filmdraai" EntitySet="filmdraais" />
+            <End Role="reservering" EntitySet="reserverings" />
+          </AssociationSet>
+          <AssociationSet Name="filmfilmdraai" Association="BralmerDatabaseModel.filmfilmdraai">
+            <End Role="film" EntitySet="films" />
+            <End Role="filmdraai" EntitySet="filmdraais" />
+          </AssociationSet>
+          <AssociationSet Name="zaalfilmdraai" Association="BralmerDatabaseModel.zaalfilmdraai">
+            <End Role="zaal" EntitySet="zaals" />
+            <End Role="filmdraai" EntitySet="filmdraais" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="reserveringgast">
+          <End Type="BralmerDatabaseModel.reservering" Role="reservering" Multiplicity="1" />
+          <End Type="BralmerDatabaseModel.gast" Role="gast" Multiplicity="*" />
+        </Association>
+        <Association Name="reserveringkorting">
+          <End Type="BralmerDatabaseModel.reservering" Role="reservering" Multiplicity="1" />
+          <End Type="BralmerDatabaseModel.korting" Role="korting" Multiplicity="*" />
+        </Association>
+        <Association Name="filmdraaireservering">
+          <End Type="BralmerDatabaseModel.filmdraai" Role="filmdraai" Multiplicity="1" />
+          <End Type="BralmerDatabaseModel.reservering" Role="reservering" Multiplicity="*" />
+        </Association>
+        <Association Name="filmfilmdraai">
+          <End Type="BralmerDatabaseModel.film" Role="film" Multiplicity="1" />
+          <End Type="BralmerDatabaseModel.filmdraai" Role="filmdraai" Multiplicity="*" />
+        </Association>
+        <Association Name="zaalfilmdraai">
+          <End Type="BralmerDatabaseModel.zaal" Role="zaal" Multiplicity="1" />
+          <End Type="BralmerDatabaseModel.filmdraai" Role="filmdraai" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BralmerDatabaseModelStoreContainer" CdmEntityContainer="BralmerDatabaseEntities">
+          <EntitySetMapping Name="films">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.film">
+              <MappingFragment StoreEntitySet="film">
+                <ScalarProperty Name="idFilm" ColumnName="idFilm" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="Beschrijving" ColumnName="Beschrijving" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="filmdraais">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.filmdraai">
+              <MappingFragment StoreEntitySet="filmdraai">
+                <ScalarProperty Name="idFilmdraai" ColumnName="idFilmdraai" />
+                <ScalarProperty Name="Film_idFilm" ColumnName="Film_idFilm" />
+                <ScalarProperty Name="Zaal_idZaal" ColumnName="Zaal_idZaal" />
+                <ScalarProperty Name="Begintijd" ColumnName="Begintijd" />
+                <ScalarProperty Name="Eindtijd" ColumnName="Eindtijd" />
+                <ScalarProperty Name="Filmdraaiprijs" ColumnName="Filmdraaiprijs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gasts">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.gast">
+              <MappingFragment StoreEntitySet="gast">
+                <ScalarProperty Name="idGast" ColumnName="idGast" />
+                <ScalarProperty Name="Reservering_idReservering" ColumnName="Reservering_idReservering" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="Achternaam" ColumnName="Achternaam" />
+                <ScalarProperty Name="Tussenvoegsels" ColumnName="Tussenvoegsels" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kortings">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.korting">
+              <MappingFragment StoreEntitySet="korting">
+                <ScalarProperty Name="idKorting" ColumnName="idKorting" />
+                <ScalarProperty Name="Begindatum" ColumnName="Begindatum" />
+                <ScalarProperty Name="Einddatum" ColumnName="Einddatum" />
+                <ScalarProperty Name="KortingProcent" ColumnName="KortingProcent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reserverings">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.reservering">
+              <MappingFragment StoreEntitySet="reservering">
+                <ScalarProperty Name="idReservering" ColumnName="idReservering" />
+                <ScalarProperty Name="Filmdraai_idFilmdraai" ColumnName="Filmdraai_idFilmdraai" />
+                <ScalarProperty Name="AantalGasten" ColumnName="AantalGasten" />
+                <ScalarProperty Name="TotaalPrijs" ColumnName="TotaalPrijs" />
+                <ScalarProperty Name="Reserveringcol" ColumnName="Reserveringcol" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
+                <ScalarProperty Name="BankrekeningNummer" ColumnName="BankrekeningNummer" />
+                <ScalarProperty Name="Gast_idGast" ColumnName="Gast_idGast" />
+                <ScalarProperty Name="Korting_idKorting" ColumnName="Korting_idKorting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zaals">
+            <EntityTypeMapping TypeName="BralmerDatabaseModel.zaal">
+              <MappingFragment StoreEntitySet="zaal">
+                <ScalarProperty Name="idZaal" ColumnName="idZaal" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="Zitplaatsen" ColumnName="Zitplaatsen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
